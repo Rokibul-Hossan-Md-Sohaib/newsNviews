@@ -2,18 +2,21 @@ import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import React from 'react'
 
 import InshortTabs from './Components/InshortTabs'
-import DiscoverScreen from './screens/DiscoverScreen'
+import Context from './others/Context'
 
-const App = () => {
+function App() {
   return (
-    <View style={{...styles.container , backgroundColor: "#282C35"}}>
-
+    <View style={{ ...styles.container, backgroundColor: "#282C35" }}>
       <InshortTabs />
     </View>
   )
 }
 
-export default App
+export default () => {
+  return (<Context>
+    <App />
+  </Context>)
+}
 
 const styles = StyleSheet.create({
 
