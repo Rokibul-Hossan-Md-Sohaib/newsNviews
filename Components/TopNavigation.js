@@ -1,14 +1,24 @@
 import { StyleSheet, Text, View, TouchableOpacity, backgroundColor } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { AntDesign, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons'
+import { NewsContext } from './../others/Context';
 
 const TopNavigation = ({ index, setIndex }) => {
+
+    const { darkTheme, setDarkTheme, fetchNews } = useContext(NewsContext)
     return (
-        <View style={{ ...styles.container, backgroundColor: "282C35" }}>
+        <View style={{
+            ...styles.container,
+
+            backgroundColor: darkTheme ? "#282C35" : "white"
+        }}>
 
             {index === 0 ? (
-                <TouchableOpacity style={styles.left}>
-                    <Text style={{ ...styles.text, color: "lightgrey" }}>
+                <TouchableOpacity
+                    style={styles.left}
+                    onPress={() => setDarkTheme(!darkTheme)}
+                >
+                    <Text style={{ ...styles.text, color: darkTheme ? "lightgrey" : "black" }}>
                         <MaterialCommunityIcons
                             name="theme-light-dark"
                             size={24}
@@ -17,7 +27,6 @@ const TopNavigation = ({ index, setIndex }) => {
                     </Text>
                 </TouchableOpacity>
             )
-
                 :
                 (
                     <TouchableOpacity
@@ -27,17 +36,18 @@ const TopNavigation = ({ index, setIndex }) => {
                         <SimpleLineIcons name='arrow-left'
                             size={15} color="#007FFF"
                         />
-                        <Text style={{ ...styles.text, color: 'lightgrey' }}> Discover</Text>
+                        <Text style={{ ...styles.text, color: darkTheme ? "lightgrey" : "black" }}> Discover</Text>
                     </TouchableOpacity>
                 )
             }
 
-            <Text style={{ ...styles.center, color: 'white' }}>
+            <Text style={{ ...styles.center, color: darkTheme ? "white" : "black" }}>
                 {index ? "All News" : "Discover"}
             </Text>
             {index ? (
                 <TouchableOpacity
                     style={styles.right}
+                    onPress={() => fetchNews("general")}
                 >
                     <Text style={styles.text}
 
@@ -52,7 +62,7 @@ const TopNavigation = ({ index, setIndex }) => {
                         style={styles.left}
                         onPress={() => setIndex(index === 0 ? 1 : 0)}>
 
-                        <Text style={{ ...styles.text, color: 'white' }}> All News</Text>
+                        <Text style={{ ...styles.text, color: darkTheme ? "lightgrey" : "black" }}> All News</Text>
                         <SimpleLineIcons name='arrow-right'
                             size={15} color="#007FFF"
                         />
@@ -87,7 +97,7 @@ const styles = StyleSheet.create({
         width: 80,
         alignItems: "flex-end"
     },
-    center:{
+    center: {
         paddingBottom: 6,
         borderBottomColor: '#007FFF',
         borderBottomWidth: 5,
